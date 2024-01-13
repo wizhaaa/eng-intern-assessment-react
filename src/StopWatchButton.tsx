@@ -3,7 +3,7 @@ import React from "react";
 type StopWatchBUttonProps = {
   children: string;
   onClick: () => void;
-  variant?: "primary" | "secondary";
+  variant?: string;
 };
 
 export default function StopWatchButton({
