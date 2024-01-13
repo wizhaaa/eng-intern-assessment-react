@@ -1,5 +1,5 @@
 import React from "react";
-import {render, screen, fireEvent, act} from "@testing-library/react";
+import {render, screen, fireEvent, act, within} from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Stopwatch from "../src/StopWatch";
 
@@ -42,12 +42,17 @@ describe("Stopwatch", () => {
 
     fireEvent.click(screen.getByText("Start"));
     fireEvent.click(screen.getByText("Lap"));
-    expect(screen.getByTestId("lap-list")).toContainElement(
-      screen.getByText(/(\d{2}:){2}\d{2}/)
-    );
+
+    // expect(screen.getByTestId("lap-list")).toContainElement(
+    //   screen.getAllByText(/(\d{2}:){2}\d{2}/)
+    // );
 
     fireEvent.click(screen.getByText("Lap"));
-    expect(screen.getByTestId("lap-list").children.length).toBe(2);
+
+    const laps = within(screen.getByTestId("lap-list")).getAllByText(
+      /(\d{2}:){2}\d{2}/
+    );
+    expect(laps.length).toBe(2);
   });
 
   test("resets the stopwatch", () => {
